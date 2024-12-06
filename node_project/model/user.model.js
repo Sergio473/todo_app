@@ -14,33 +14,39 @@ const userSchema = new Schema({
     */
     email: {
         type: String,
-        lowercase: String,
-        required: true,
-        unique: true
+        lowercase: true,
+        required: [true, "userName can't be empty"],
+        // @ts-ignore
+        match: [
+            /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
+            "userName format is not correct",
+        ],
+        unique: true,
     },
     password: {
         type: String,
-        required: true,
-    }
-});
+        required: [true, "password is required"],
+    },
+}, {timestamps:true});
 
 //Función para guardar y encriptar la contraseña en la base de datos
 userSchema.pre('save', async function () {
-    try {
-        var user = this;
-        const salt = await (bcrypt.genSalt(10));
-        const hashpass = await bcrypt.hash(user.password, salt);
-
-        user.password = hashpass;
-
-    } catch (error) {
-        throw error;
+    var user = this;
+    if(!user.isModified("password")){
+        return
+    }
+    try{
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(user.password,salt);
+        user.password = hash;
+    }catch(err){
+        throw err;
     }
 });
 
-userSchema.methods.comparePassword = async function (userPassword) {
+userSchema.methods.comparePassword = async function (candidatePassword) {
     try {
-        const isMatch = await bcrypt.compare(userPassword, this.password);
+        const isMatch = await bcrypt.compare(candidatePassword, this.password);
         return isMatch;
     } catch (error) {
         throw error;

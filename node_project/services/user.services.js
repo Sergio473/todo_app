@@ -1,7 +1,7 @@
 const UserModel = require('../model/user.model');
 const jwt = require('jsonwebtoken');
 
-class UserService {
+class UserServices {
     //Lo mismo para el servicio ya que se añadio un campo más pues también se añade el parametro en registerUser y en UserModel 
     //registerUser(name, email, password)
     //const createUser = new UserModel({ name, email, password })
@@ -14,19 +14,27 @@ class UserService {
         }
     }
 
+    static async getUserByEmail(email){
+        try{
+            return await UserModel.findOne({email});
+        }catch(err){
+            console.log(err);
+        }
+    }
+
     static async checkUser(email){
         try{
-            return await UserModel({email});
+            return await UserModel.findOne({email});
         }catch (error){
             return error;
         }
     }
 
-    static async generateToken(tokenData, secretKey, jwt_expire){
-        return jwt.sign(tokenData, secretKey,{expiresIn: jwt_expire});
+    static async generateAccessToken(tokenData,JWTSecret_Key,JWT_EXPIRE){
+        return jwt.sign(tokenData, JWTSecret_Key, { expiresIn: JWT_EXPIRE });
     }
 }
 
 
 
-module.exports = UserService;
+module.exports = UserServices;

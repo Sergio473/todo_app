@@ -9,7 +9,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class Dashboard extends StatefulWidget {
   final token;
-  const Dashboard({@required this.token,super.key});
+  const Dashboard({@required this.token,Key? key}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -18,8 +18,8 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
 
   late String userId;
-  final TextEditingController _todoTitle = TextEditingController();
-  final TextEditingController _todoDesc = TextEditingController();
+  TextEditingController _todoTitle = TextEditingController();
+  TextEditingController _todoDesc = TextEditingController();
   List? items;
   @override
   void initState() {
@@ -103,11 +103,11 @@ class _DashboardState extends State<Dashboard> {
          crossAxisAlignment: CrossAxisAlignment.start,
          children: [
            Container(
-             padding: const EdgeInsets.only(top: 60.0,left: 30.0,right: 30.0,bottom: 30.0),
-             child: const Column(
+             padding: EdgeInsets.only(top: 60.0,left: 30.0,right: 30.0,bottom: 30.0),
+             child: Column(
                crossAxisAlignment: CrossAxisAlignment.start,
                children: [
-                 CircleAvatar(backgroundColor: Colors.white,radius: 30.0,child: Icon(Icons.list,size: 30.0,),),
+                 CircleAvatar(child: Icon(Icons.list,size: 30.0,),backgroundColor: Colors.white,radius: 30.0,),
                  SizedBox(height: 10.0),
                  Text('ToDo with NodeJS + Mongodb',style: TextStyle(fontSize: 30.0,fontWeight: FontWeight.w700),),
                  SizedBox(height: 8.0),
@@ -118,7 +118,7 @@ class _DashboardState extends State<Dashboard> {
            ),
            Expanded(
              child: Container(
-               decoration: const BoxDecoration(
+               decoration: BoxDecoration(
                    color: Colors.white,
                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
                ),
@@ -134,7 +134,7 @@ class _DashboardState extends State<Dashboard> {
                            dismissible: DismissiblePane(onDismissed: () {}),
                            children: [
                              SlidableAction(
-                               backgroundColor: const Color(0xFFFE4A49),
+                               backgroundColor: Color(0xFFFE4A49),
                                foregroundColor: Colors.white,
                                icon: Icons.delete,
                                label: 'Delete',
@@ -148,10 +148,10 @@ class _DashboardState extends State<Dashboard> {
                          child: Card(
                            borderOnForeground: false,
                            child: ListTile(
-                             leading: const Icon(Icons.task),
+                             leading: Icon(Icons.task),
                              title: Text('${items![index]['title']}'),
                              subtitle: Text('${items![index]['desc']}'),
-                             trailing: const Icon(Icons.arrow_back),
+                             trailing: Icon(Icons.arrow_back),
                            ),
                          ),
                        );
@@ -164,8 +164,8 @@ class _DashboardState extends State<Dashboard> {
        ),
       floatingActionButton: FloatingActionButton(
         onPressed: () =>_displayTextInputDialog(context) ,
+        child: Icon(Icons.add),
         tooltip: 'Add-ToDo',
-        child: const Icon(Icons.add),
       ),
     );
   }
@@ -175,14 +175,14 @@ class _DashboardState extends State<Dashboard> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Add To-Do'),
+            title: Text('Add To-Do'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: _todoTitle,
                   keyboardType: TextInputType.text,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
                       hintText: "Title",
@@ -192,7 +192,7 @@ class _DashboardState extends State<Dashboard> {
                 TextField(
                   controller: _todoDesc,
                   keyboardType: TextInputType.text,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
                       hintText: "Description",
@@ -201,7 +201,7 @@ class _DashboardState extends State<Dashboard> {
                 ).p4().px8(),
                 ElevatedButton(onPressed: (){
                   addTodo();
-                  }, child: const Text("Add"))
+                  }, child: Text("Add"))
               ],
             )
           );

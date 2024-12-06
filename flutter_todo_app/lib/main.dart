@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
   final token;
   const MyApp({
     @required this.token,
-    super.key,
-});
+    Key? key,
+}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: (token != null && JwtDecoder.isExpired(token) == false )?Dashboard(token: token):const SignInPage()
+      home: (token != null && JwtDecoder.isExpired(token) == false )?Dashboard(token: token):SignInPage()
     );
   }
 }

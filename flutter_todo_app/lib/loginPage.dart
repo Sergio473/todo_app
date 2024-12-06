@@ -9,8 +9,6 @@ import 'package:http/http.dart' as http;
 import 'config.dart';
 
 class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
-
   @override
   _SignInPageState createState() => _SignInPageState();
 }
@@ -18,7 +16,7 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final bool _isNotValidate = false;
+  bool _isNotValidate = false;
   late SharedPreferences prefs;
 
   @override
@@ -64,9 +62,9 @@ class _SignInPageState extends State<SignInPage> {
         body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Color(0XFFF95A3B),Color(0XFFF96713)],
+                colors: [const Color(0XFFF95A3B),const Color(0XFFF96713)],
                 begin: FractionalOffset.topLeft,
                 end: FractionalOffset.bottomCenter,
                 stops: [0.0,0.8],
@@ -78,8 +76,8 @@ class _SignInPageState extends State<SignInPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const CommonLogo(),
-                  const HeightBox(10),
+                  CommonLogo(),
+                  HeightBox(10),
                   "Email Sign-In".text.size(22).yellow100.make(),
 
                   TextField(
@@ -90,7 +88,7 @@ class _SignInPageState extends State<SignInPage> {
                         fillColor: Colors.white,
                         hintText: "Email",
                         errorText: _isNotValidate ? "Enter Proper Info" : null,
-                        border: const OutlineInputBorder(
+                        border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10.0)))),
                   ).p4().px24(),
                   TextField(
@@ -101,7 +99,7 @@ class _SignInPageState extends State<SignInPage> {
                         fillColor: Colors.white,
                         hintText: "Password",
                         errorText: _isNotValidate ? "Enter Proper Info" : null,
-                        border: const OutlineInputBorder(
+                        border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10.0)))),
                   ).p4().px24(),
                   GestureDetector(
@@ -119,7 +117,7 @@ class _SignInPageState extends State<SignInPage> {
         ),
         bottomNavigationBar: GestureDetector(
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>const Registration()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Registration()));
           },
           child: Container(
               height: 25,

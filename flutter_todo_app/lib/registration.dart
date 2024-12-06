@@ -9,8 +9,6 @@ import 'package:http/http.dart' as http;
 import 'config.dart';
 
 class Registration extends StatefulWidget {
-  const Registration({super.key});
-
   @override
   _RegistrationState createState() => _RegistrationState();
 }
@@ -24,7 +22,6 @@ class _RegistrationState extends State<Registration> {
   void registerUser() async{
     if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty){
 
-      //Comprobamos que se este poniendo algo en el campo de texto
       var regBody = {
         "email":emailController.text,
         "password":passwordController.text
@@ -40,7 +37,7 @@ class _RegistrationState extends State<Registration> {
       print(jsonResponse['status']);
 
       if(jsonResponse['status']){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>const SignInPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInPage()));
       }else{
         print("SomeThing Went Wrong");
       }
@@ -58,9 +55,9 @@ class _RegistrationState extends State<Registration> {
         body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Color(0XFFF95A3B),Color(0XFFF96713)],
+                colors: [const Color(0XFFF95A3B),const Color(0XFFF96713)],
                 begin: FractionalOffset.topLeft,
                 end: FractionalOffset.bottomCenter,
                 stops: [0.0,0.8],
@@ -72,8 +69,8 @@ class _RegistrationState extends State<Registration> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const CommonLogo(),
-                  const HeightBox(10),
+                  CommonLogo(),
+                  HeightBox(10),
                   "CREATE YOUR ACCOUNT".text.size(22).yellow100.make(),
                   TextField(
                     controller: emailController,
@@ -81,21 +78,21 @@ class _RegistrationState extends State<Registration> {
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
-                        errorStyle: const TextStyle(color: Colors.white),
+                        errorStyle: TextStyle(color: Colors.white),
                         errorText: _isNotValidate ? "Enter Proper Info" : null,
                         hintText: "Email",
-                        border: const OutlineInputBorder(
+                        border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10.0)))),
                   ).p4().px24(),
                   TextField(
                     controller: passwordController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
-                        suffixIcon: IconButton(icon: const Icon(Icons.copy),onPressed: (){
+                        suffixIcon: IconButton(icon: Icon(Icons.copy),onPressed: (){
                           final data = ClipboardData(text: passwordController.text);
                           Clipboard.setData(data);
                         },),
-                        prefixIcon: IconButton(icon: const Icon(Icons.password),onPressed: (){
+                        prefixIcon: IconButton(icon: Icon(Icons.password),onPressed: (){
                           String passGen =  generatePassword();
                           passwordController.text = passGen;
                           setState(() {
@@ -104,10 +101,10 @@ class _RegistrationState extends State<Registration> {
                         },),
                         filled: true,
                         fillColor: Colors.white,
-                        errorStyle: const TextStyle(color: Colors.white),
+                        errorStyle: TextStyle(color: Colors.white),
                         errorText: _isNotValidate ? "Enter Proper Info" : null,
                         hintText: "Password",
-                        border: const OutlineInputBorder(
+                        border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10.0)))),
                   ).p4().px24(),
                   HStack([
@@ -121,7 +118,7 @@ class _RegistrationState extends State<Registration> {
                   GestureDetector(
                     onTap: (){
                       print("Sign In");
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const SignInPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInPage()));
                     },
                     child: HStack([
                       "Already Registered?".text.make(),
